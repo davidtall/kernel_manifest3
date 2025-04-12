@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export CONFIG="gt5pro"
-export ANYKERNEL_BRANCH="android14-6.1"
-export SUSFS_BRANCH="gki-android14-6.1"
+export CONFIG="gt7pro"
+export ANYKERNEL_BRANCH="android15-6.6"
+export SUSFS_BRANCH="gki-android15-6.6"
 export SUSFS_VERSION="v1.5.5"
 
 sudo apt-get update
@@ -22,8 +22,8 @@ cd "$CONFIG"
 cd kernel_platform
 rm common/android/abi_gki_protected_exports_* || echo "No protected exports!"
 rm msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
-sed -i 's|echo "\$res"|echo "-android14-11-o-v$(date +%Y%m%d)"|' common/scripts/setlocalversion
-sed -i 's|echo "\$res"|echo "-android14-11-o-v$(date +%Y%m%d)"|' msm-kernel/scripts/setlocalversion
+sed -i 's|echo "\$res"|echo "-android15-8-o-v$(date +%Y%m%d)"|' common/scripts/setlocalversion
+sed -i 's|echo "\$res"|echo "-android15-8-o-v$(date +%Y%m%d)"|' msm-kernel/scripts/setlocalversion
 sed -i 's/ -dirty//g' external/dtc/scripts/setlocalversion
 sed -i 's/SUBLEVEL = 68/SUBLEVEL = 75/' msm-kernel/Makefile
 

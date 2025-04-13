@@ -35,7 +35,7 @@
   <project remote="clo-la" name="kernel_platform/external/zlib" path="kernel_platform/external/zlib" revision="4f57254519623a55dcd5bedc454337f6352f2193"  clone-depth="1"/>
   <project remote="clo-la" name="kernel_platform/external/zopfli" path="kernel_platform/external/zopfli" revision="1e312f1cc3edc4cf7c489aa95a01f2878eb01fd7"  clone-depth="1"/>
   <project remote="clo-la" name="kernel_platform/prebuilts/asuite" path="kernel_platform/prebuilts/asuite" revision="249fe99d9f4dfe4ba307019feeb2c3c34a902bd7"  clone-depth="1"/>
-  <project remote="clo-la" name="kernel_platform/prebuilts/build-tools" path="kernel_platform/prebuilts/build-tools" revision="d399f06c8cee351df2b93bac1e767f673d776c16"  clone-depth="1">
+  <project remote="clo-la" name="kernel_platform/prebuilts/build-tools" path="kernel_platform/prebuilts/build-tools" revision="d399f06c8cee351df2b93bac1e767f673d776c16"   upstream="refs/heads/ks-kernel.lnx.4.0.r1-rel">
     <linkfile dest="kernel_platform/build/prebuilts/build-tools" src="."/>
   </project>
   <project remote="clo-la" name="kernel_platform/prebuilts/clang-tools" path="kernel_platform/prebuilts/clang-tools" revision="70bc10de031e2d0ff7e76adb9746bf339bb135c0"  clone-depth="1">

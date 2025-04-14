@@ -132,16 +132,14 @@ jobs:
           echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG"
           
-          echo "Building the kernel..."
-          rm ./kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
-          rm ./kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          echo "Building the kernel...
           #git config --global user.email "bins4us@hotmail.com"
           #git config --global user.name "TheWildJames"
           #git add *
           #git commit -s -a -m "getting rid of -dirty"
           if [ -f ./kernel_platform/build_with_bazel.py ]; then
             ./kernel_platform/build_with_bazel.py \
-              -t ${{ inputs.soc }} \
+              -t sun \
               gki \
               --jobs=$(nproc --all) \
               --verbose_failures \

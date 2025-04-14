@@ -131,6 +131,7 @@ jobs:
         run: |
           echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG"
+          cd kernel_workspace/kernel_platform
           
           echo "Building the kernel...
           #git config --global user.email "bins4us@hotmail.com"
@@ -148,7 +149,6 @@ jobs:
               --ignore_missing_projects \
               -o "$(pwd)/out"
           else
-            cd kernel_workspace/kernel_platform
             ./kernel_platform/oplus/build/oplus_build_kernel.sh sun gki
           fi
       - name: Make AnyKernel3

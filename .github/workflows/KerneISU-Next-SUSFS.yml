@@ -148,6 +148,7 @@ jobs:
               --ignore_missing_projects \
               -o "$(pwd)/out"
           else
+            cd kernel_workspace/kernel_platform
             ./kernel_platform/oplus/build/oplus_build_kernel.sh sun gki
           fi
       - name: Make AnyKernel3

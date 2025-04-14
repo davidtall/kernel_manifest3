@@ -129,9 +129,8 @@ jobs:
 
       - name: Build kernel
         run: |
-          echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG"
-          cd kernel_workspace/kernel_platform
+          
+          cd kernel_workspace
           
           echo "Building the kernel...
           #git config --global user.email "bins4us@hotmail.com"

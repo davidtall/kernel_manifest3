@@ -22,8 +22,8 @@ cd "$CONFIG"
 cd kernel_platform
 rm common/android/abi_gki_protected_exports_* || echo "No protected exports!"
 rm msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
-sed -i 's|echo "\$res"|echo "-android15-8-o-v$(date +%Y%m%d)"|' common/scripts/setlocalversion
-sed -i 's|echo "\$res"|echo "-android15-8-o-v$(date +%Y%m%d)"|' msm-kernel/scripts/setlocalversion
+sed -i 's|echo "\$res"|echo "-android15-6-o-v$(date +%Y%m%d)"|' common/scripts/setlocalversion
+sed -i 's|echo "\$res"|echo "-android15-6-o-v$(date +%Y%m%d)"|' msm-kernel/scripts/setlocalversion
 sed -i 's/ -dirty//g' external/dtc/scripts/setlocalversion
 sed -i 's/SUBLEVEL = 68/SUBLEVEL = 75/' msm-kernel/Makefile
 

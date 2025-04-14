@@ -129,9 +129,8 @@ jobs:
 
       - name: Build kernel
         run: |
-          cd kernel_workspace
-          
-          LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh sun gki out || true
+          cd kernel_workspace/kernel_platform
+          ./build_with_bazel.py -t sun gki --lto=thin --config=fast --disk_cache=$HOME/.cache/bazel --//msm-kernel:skip_abi=true --//msm-kernel:skip_abl=true -o "$(pwd)/out" || true
 
       - name: Make AnyKernel3
         run: |

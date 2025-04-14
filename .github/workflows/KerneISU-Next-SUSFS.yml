@@ -93,7 +93,7 @@ jobs:
           echo "Applying SUSFS patches..."
           
           # Copy SUSFS patches
-          cp ../../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./common/
+          cp ../../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch ./common/
           cp ../../susfs4ksu/kernel_patches/fs/* ./common/fs/
           cp ../../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
 
@@ -105,7 +105,7 @@ jobs:
           
           # Change to common directory and apply SUSFS patch
           cd ../common
-          patch -p1 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
+          patch -p1 < 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch || true
 
       - name: Apply KSU Hooks
         run: |
@@ -199,7 +199,7 @@ jobs:
           #git commit -s -a -m "getting rid of -dirty"
           if [ -f ./kernel_platform/build_with_bazel.py ]; then
             ./kernel_platform/build_with_bazel.py \
-              -t ${{ inputs.soc }} \
+              -t ${{ github.event.inputs.CPUD }} \
               gki \
               --jobs=$(nproc --all) \
               --verbose_failures \
@@ -208,7 +208,7 @@ jobs:
               --ignore_missing_projects \
               -o "$(pwd)/out"
           else
-            ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} gki
+            ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
           fi
 
       - name: Copy Images
@@ -225,7 +225,7 @@ jobs:
           cd ./AnyKernel3
 
           # Zip the files in the AnyKernel3 directory with a new naming convention
-          ZIP_NAME="${{ inputs.model }}_${{ inputs.android_version }}_${{ inputs.kernel_version }}_Next_SUSFS_AnyKernel3.zip"
+          ZIP_NAME="GT7pro_${{ github.event.inputs.ANDROID_VERSION }}_${{ github.event.inputs.KERNEL_VERSION }}_Next_SUSFS_AnyKernel3.zip"
           echo "Creating zip file $ZIP_NAME..."
           zip -r "../$ZIP_NAME" ./*
           

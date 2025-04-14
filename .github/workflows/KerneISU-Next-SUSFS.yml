@@ -150,7 +150,7 @@ jobs:
               --ignore_missing_projects \
               -o "$(pwd)/out"
           else
-            ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} gki
+            ./kernel_platform/oplus/build/oplus_build_kernel.sh sun gki
           fi
       - name: Make AnyKernel3
         run: |

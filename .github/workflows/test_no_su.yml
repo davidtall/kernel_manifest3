@@ -1,0 +1,91 @@
+name: Build Kernel GT7 PRO no su
+on:
+  workflow_dispatch:
+    inputs:
+      CPU:
+        description: "处理器分支"
+        required: true
+        default: 'sm8750'
+      MANIFEST:
+        description: "配置文件"
+        required: true
+        default: 'gt7pro'
+      CPUD:
+        description: "处理器代号"
+        required: true
+        default: 'sun'
+      ANDROID_VERSION:
+        description: "内核安卓版本"
+        required: true
+        default: 'android15'
+      KERNEL_VERSION:
+        description: "内核版本"
+        required: true
+        default: '6.6'
+      SUSFS_ENABLED:
+        description: "添加 SUSFS"
+        required: true
+        type: boolean
+        default: true
+      SUSFS_VERSION:
+        description: "SUSFS 版本"
+        required: true
+        default: 'v1.5.5'
+      KSU_NEXT_VERSION:
+        description: "KernelSU-Next 版本"
+        required: true
+        default: 'v1.0.6'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 8192
+          temp-reserve-mb: 2048
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+
+      - name: Config and dependencies
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          echo "KVER=v$(date +%Y%m%d)" >> $GITHUB_ENV
+          sudo apt update
+          sudo apt install -y python3 git curl
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/repo
+          chmod a+x ~/repo
+          sudo mv ~/repo /usr/local/bin/repo
+
+      - name: Initialize repo and sync
+        run: |
+          mkdir kernel_workspace && cd kernel_workspace
+          repo init -u https://github.com/tryle17/kernel_manifest3.git -b realme/${{ github.event.inputs.CPU }} -m ${{ github.event.inputs.MANIFEST }}.xml --depth=1
+          repo sync -c -j$(nproc --all) --no-tags --fail-fast
+          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          sed -i 's|echo "\$res"|echo "-android15-6-o-${{ env.KVER }}"|' kernel_platform/common/scripts/setlocalversion
+          sed -i 's|echo "\$res"|echo "-android15-6-o-${{ env.KVER }}"|' kernel_platform/msm-kernel/scripts/setlocalversion
+          sed -i 's/ -dirty//g' kernel_platform/external/dtc/scripts/setlocalversion
+          sed -i 's/SUBLEVEL = 68/SUBLEVEL = 75/' kernel_platform/msm-kernel/Makefile
+
+      - name: Build kernel
+        run: |
+          cd kernel_workspace/kernel_platform
+          ./build_with_bazel.py -t sun perf --lto=thin 
+
+      - name: Make AnyKernel3
+        run: |
+          git clone https://github.com/Kernel-SU/AnyKernel3 --depth=1
+          rm -rf ./AnyKernel3/.git
+          cp kernel_workspace/kernel_platform/out/dist/Image ./AnyKernel3/
+
+      - name: Upload AnyKernel3
+        uses: actions/upload-artifact@v4
+        with:
+          name: AK3_KSU_Next_${{ github.event.inputs.MANIFEST }}_${{ env.KVER }}
+          path: ./AnyKernel3/*

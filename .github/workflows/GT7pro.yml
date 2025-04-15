@@ -56,6 +56,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           echo "KVER=v$(date +%Y%m%d)" >> $GITHUB_ENV
           sudo apt update
+          sudo apt install tree
           sudo apt install -y python3 git curl
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/repo
           chmod a+x ~/repo
@@ -132,8 +133,8 @@ jobs:
         run: |
           git clone https://github.com/Kernel-SU/AnyKernel3 --depth=1
           rm -rf ./AnyKernel3/.git
-          ls -a kernel_workspace/kernel_platform/bazel-out/k8-fastbuild/bin/msm-kernel/
-          cp kernel_workspace/kernel_platform/bazel-out/k8-fastbuild/bin/msm-kernel/pineapple_gki_kbuild_mixed_tree/Image ./AnyKernel3/
+          tree kernel_workspace/kernel_platform/bazel-out/k8-fastbuild/bin/msm-kernel/
+          cp kernel_workspace/kernel_platform/bazel-out/k8-fastbuild/bin/msm-kernel/sun_perf_kbuild_mixed_tree/Image ./AnyKernel3/
           
 
       - name: Upload AnyKernel3

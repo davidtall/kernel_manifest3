@@ -69,7 +69,8 @@ jobs:
           repo sync -c -j$(nproc --all) --no-tags --fail-fast
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
-          sed -i 's|echo "\$res"|echo "-android15-6-8-g013ec21bba94"|' kernel_platform/common/scripts/setlocalversion
+          sed -i 's|echo "\$res"|echo "-android15-8-o-${{ env.KVER }}"|' kernel_platform/common/scripts/setlocalversion
+          sed -i 's|echo "\$res"|echo "-android15-8-o-${{ env.KVER }}"|' kernel_platform/msm-kernel/scripts/setlocalversion
           sed -i 's/ -dirty//g' kernel_platform/external/dtc/scripts/setlocalversion
           sed -i 's/SUBLEVEL = 68/SUBLEVEL = 75/' kernel_platform/msm-kernel/Makefile
 
@@ -156,13 +157,8 @@ jobs:
          echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
-
-
-
-       
-         
          sed -i '2s/check_defconfig//' ./common/build.config.gki
-          # Remove check_defconfig
+         # Remove check_defconfig
         
 
 

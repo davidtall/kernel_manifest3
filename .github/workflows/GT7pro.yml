@@ -78,10 +78,11 @@ jobs:
         run: |
           cd kernel_workspace/kernel_platform
           echo "Adding KernelSU..."
-          curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next
+          curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
           #cd ./KernelSU-Next/kernel
           #sed -i 's/ccflags-y += -DKSU_VERSION=16/ccflags-y += -DKSU_VERSION=12000/' ./Makefile
           KSU_VERSION=$(cd ./KernelSU-Next/kernel && git describe --tags --abbrev=0)
+          sed -i "s/DKSU_VERSION=12472/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
 
 
       - name: Set up susfs

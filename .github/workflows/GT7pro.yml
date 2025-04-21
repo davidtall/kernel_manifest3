@@ -129,7 +129,7 @@ jobs:
         run: |
          cd kernel_workspace/kernel_platform/common
          sed -i '/#include <trace\/hooks\/blk.h>/a \
-         #include <trace/hooks/fs.h>\
+         #include <trace\/hooks\/fs.h>\
          #ifdef CONFIG_KSU_SUSFS_SUS_MOUNT\
          extern bool susfs_is_current_ksu_domain(void);\
          extern bool susfs_is_current_zygote_domain(void);\

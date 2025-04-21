@@ -165,6 +165,7 @@ jobs:
          bool susfs_is_auto_add_try_umount_for_bind_mount_enabled = true;
          #endif
          EOF
+         head -n 150 fs/namespace.c
 
 
 

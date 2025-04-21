@@ -129,8 +129,6 @@ jobs:
       - name: 修补susfs错误
         run: |
          cd kernel_workspace/kernel_platform/common
-         cat fs/namespace.c
-         cat fs/namespace.rej
          sed -i '/#include <trace\/hooks\/blk.h>/a #include <trace/hooks/fs.h>' fs/namespace.c
          sed -i $'/^#include <linux\/mnt_idmapping.h>$/a \\\n#if defined(CONFIG_KSU_SUSFS_SUS_MOUNT) || defined(CONFIG_KSU_SUSFS_TRY_UMOUNT)\n#include <linux/susfs_def.h>\n#endif' fs/namespace.c
          sed -i $'/^#include <trace\/hooks\/fs.h>$/a \\\n#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT\n\\\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\n\\\nstatic DEFINE_IDA(susfs_mnt_id_ida);\nstatic DEFINE_IDA(susfs_mnt_group_ida);\n\\\n#define CL_ZYGOTE_COPY_MNT_NS BIT(24)\n#define CL_COPY_MNT_NS BIT(25)\n#endif' fs/namespace.c
@@ -149,6 +147,10 @@ jobs:
          echo -e "extern void susfs_auto_add_try_umount_for_bind_mount(struct path *path);" >> fs/namespace.c
          echo -e "bool susfs_is_auto_add_try_umount_for_bind_mount_enabled = true;" >> fs/namespace.c
          echo -e "#endif" >> fs/namespace.c
+         head -n 50 fs/namespace.c | grep -A 10 "susfs_def.h"
+    
+
+         tail -n 20 fs/namespace.c
 
 
 

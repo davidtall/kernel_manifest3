@@ -116,13 +116,7 @@ jobs:
           echo "正在打隐藏应用补丁"
           patch -p1 -F 3 < 69_hide_stuff.patch
          
-      - name: Apply New Hooks Patches
-        run: |
-          cd kernel_workspace/kernel_platform/common
-          cp ../../SukiSU_patch/hooks/syscall_hooks.patch ./
-          echo "正在打vfs补丁"
-          patch -p1 -F 3 < syscall_hooks.patch
-          
+      
           
             
       - name: 修补susfs错误
@@ -177,12 +171,10 @@ jobs:
       - name: Apply new hook and add configuration
         run: |
          cd kernel_workspace/kernel_platform
-         echo "CONFIG_KERNELSU=y" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
-         echo "CONFIG_KSU_WITH_KPROBES=n" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_KPM=y" >> ./common/arch/arm64/configs/gki_defconfig
-         echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./common/arch/arm64/configs/gki_defconfig
-         echo "CONFIG_KSU_MANUAL_HOOK=y" >> ./common/arch/arm64/configs/gki_defconfig
+         echo "CONFIG_KSU_SUSFS_SUS_SU=y" >> ./common/arch/arm64/configs/gki_defconfig
+         #echo "CONFIG_KSU_MANUAL_HOOK=y" >> ./common/arch/arm64/configs/gki_defconfig
          # Add SUSFS configuration settings
           echo "CONFIG_KSU_SUSFS=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig

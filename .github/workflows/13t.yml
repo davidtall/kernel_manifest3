@@ -1,4 +1,4 @@
-name: 13t
+name: OnePlus 13t
 on:
   workflow_dispatch:
     inputs:
@@ -61,7 +61,7 @@ jobs:
       - name: Initialize repo and sync
         run: |
          mkdir kernel_workspace && cd kernel_workspace
-         repo init -u https://github.com/OnePlusOSS/kernel_manifest/blob/oneplus/sm8750/oneplus_13t.xml --depth=1
+         repo init -u https://github.com/OnePlusOSS/kernel_manifest.git -boneplus/sm8750 -m oneplus_13t.xml --depth=1
          repo --trace sync -c -j$(nproc --all) --no-tags
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
@@ -151,7 +151,7 @@ jobs:
       - name: Add make name
         run: |
            cd kernel_workspace/kernel_platform
-           #sed -i 's/res="\$res\$(cat "\$file")"/res="${{ github.event.inputs.KERNEL_NAME }}"/g' ./common/scripts/setlocalversion
+           sed -i 's/res="\$res\$(cat "\$file")"/res="${{ github.event.inputs.KERNEL_NAME }}"/g' ./common/scripts/setlocalversion
 
            
       - name: Add sched_ext

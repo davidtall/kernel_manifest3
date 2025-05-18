@@ -1,21 +1,4 @@
-Skip to content
-Navigation Menu
-tryle17
-kernel_manifest3
 
-Code
-Pull requests
-Actions
-Projects
-Security
-Insights
-Settings
-Build Kernel GT7 PRO
-OnePlus SM8750 Build SuKiSu SUSFS #11
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/GT7pro.yml at 9da93fc
 name: Build Kernel GT7 PRO
 on:
   workflow_dispatch:
@@ -153,4 +136,3 @@ jobs:
         with:
           name: AK3_KSU_Next_${{ github.event.inputs.MANIFEST }}_${{ env.KVER }}
           path: ./AnyKernel3/*
-Update GT7pro.yml · tryle17/kernel_manifest3@9da93fc

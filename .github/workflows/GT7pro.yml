@@ -165,7 +165,7 @@ jobs:
 
       - name: Build kernel
         run: |
-         cd kernel_workspace/kernel_platform
+         cd kernel_workspace/
          #tools/bazel run --config=fast --config=stamp --lto=thin //common:kernel_aarch64_dist -- --dist_dir=dist
          ./kernel_platform/oplus/build/oplus_build_kernel.sh sun perf
       - name: Make AnyKernel3

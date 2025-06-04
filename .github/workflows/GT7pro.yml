@@ -26,6 +26,11 @@ on:
         description: "修改内核名称"
         required: true
         default: '-android15-8-g013ec21bba94-abogki383916444-xiaohu'
+      ZRAM:
+        type: boolean
+        description: "是否启用添加更多的ZRAM算法？"
+        required: true
+        default: true
 
 jobs:
   build:
@@ -80,16 +85,19 @@ jobs:
         run: |
            cd kernel_workspace
            git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}
-           git clone https://github.com/ExmikoN/SukiSU_patch.git
+           git clone https://github.com/ShirkNeko/SukiSU_patch.git
            cd kernel_platform        
            cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch ./common/
            cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
            cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
            #lz4k
-           #cp -r ../SukiSU_patch/other/lz4k/include/linux/* ./common/include/linux
-           #cp -r ../SukiSU_patch/other/lz4k/lib/* ./common/lib
-           #cp -r ../SukiSU_patch/other/lz4k/crypto/* ./common/crypto
-           # Apply patches
+           if [ "${{ github.event.inputs.ZRAM }}" = "true" ]; then
+           echo "正在给内核打zram补丁"
+           cp -r ../SukiSU_patch/other/zram/lz4k/include/linux/* ./common/include/linux
+           cp -r ../SukiSU_patch/other/zram/lz4k/lib/* ./common/lib
+           cp -r ../SukiSU_patch/other/zram/lz4k/crypto/* ./common/crypto
+           cp -r ../SukiSU_patch/other/zram/lz4k_oplus ./common/lib/
+           fi
            cd ./common
            sed -i 's/-32,12 +32,38/-32,11 +32,37/g' 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch
            sed -i '/#include <trace\/hooks\/fs.h>/d' 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch
@@ -106,11 +114,15 @@ jobs:
           patch -p1 -F 3 < 69_hide_stuff.patch
 
           
-      - name: Apply lz4kd Patches
+      - name: Apply LZ4KD
         run: |
-          #cd kernel_workspace/kernel_platform/common
-          #cp ../../SukiSU_patch/other/lz4k_patch/${{ github.event.inputs.KERNEL_VERSION }}/lz4kd.patch ./
-          #patch -p1 -F 3 < lz4kd.patch || true
+          cd kernel_workspace/kernel_platform/common
+          if [ "${{ github.event.inputs.ZRAM }}" = "true" ]; then
+            cp ../../SukiSU_patch/other/zram/zram_patch/${{ github.event.inputs.KERNEL_VERSION }}/lz4kd.patch ./
+            echo "正在打lz4kd补丁"
+            patch -p1 -F 3 < lz4kd.patch || true
+            echo '完成LZ4KD补丁'
+          fi
            
       - name: Add SUSFS Configuration Settings
         run: |
@@ -138,11 +150,17 @@ jobs:
           echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./common/arch/arm64/configs/gki_defconfig
           
-          #echo "CONFIG_CRYPTO_LZ4HC=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_CRYPTO_LZ4K=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_CRYPTO_LZ4KD=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_CRYPTO_842=y" >> ./common/arch/arm64/configs/gki_defconfig
-         
+          
+          if [ "${{ github.event.inputs.ZRAM }}" = "true" ]; then
+            CONFIG_FILE=./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_ZSMALLOC=y" >> ./common/arch/arm64/configs/gki_defconfig
+            sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g' ./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_CRYPTO_LZ4HC=y" >> ./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_CRYPTO_LZ4K=y" >> ./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_CRYPTO_LZ4KD=y" >> ./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_CRYPTO_842=y" >> ./common/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_ZRAM_WRITEBACK=y" >> ./common/arch/arm64/configs/gki_defconfig
+          fi
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./common/build.config.gki
           cd common

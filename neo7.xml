@@ -4,10 +4,10 @@
   <remote fetch="https://github.com/realme-kernel-opensource" name="realme"/>
   <default remote="clo-la" revision="dummy_revision" sync-c="true" sync-tags="false"/>
   <remote fetch="https://github.com/OnePlusOSS" name="origin"/>
-  <project remote="realme" name="https://github.com/realme-kernel-opensource/realme_neo7-AndroidV-kernel-source" path="./common" revision="master" clone-depth="1">
+  <project remote="realme" name="realme-kernel-opensource/realme_neo7-AndroidV-kernel-source" path="./common" revision="master" clone-depth="1">
     <linkfile dest="kernel_platform/.source_date_epoch_dir" src="."/>
   </project>
-  <project remote="realme" name="https://github.com/realme-vender-opensource/realme_neo7-AndroidV-kernel-source" path="./" revision="master" clone-depth="1">
+  <project remote="realme" name="realme-vender-opensource/realme_neo7-AndroidV-kernel-source" path="./" revision="master" clone-depth="1">
   <project remote="clo-la" name="kernel/prebuilts/build-tools" path="kernel_platform/prebuilts/kernel-build-tools" revision="d153b7ab4a4956198957e258d4f370e875c53059" upstream="refs/heads/ks-kernel.lnx.3.0.r1-rel">
     <linkfile dest="kernel_platform/build/prebuilts/kernel-build-tools" src="."/>
   </project>

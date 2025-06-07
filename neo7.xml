@@ -5,7 +5,7 @@
   <default remote="clo-la" revision="dummy_revision" sync-c="true" sync-tags="false"/>
   <remote fetch="https://github.com/OnePlusOSS" name="origin"/>
   <remote fetch="https://github.com/tryle17" name="try"/>
-  <project remote="try" name="realme-kernel-opensource/realme_neo7-AndroidV-kernel-source" path="./common" revision="master" clone-depth="1">
+  <project remote="try" name="realme-kernel-opensource/realme_neo7-AndroidV-kernel-source" path="kernel_platform/common" revision="master" clone-depth="1">
     <linkfile dest="kernel_platform/.source_date_epoch_dir" src="."/>
   </project>
   <project remote="origin" name="android_kernel_modules_and_devicetree_oneplus_sm8650" path="./" revision="oneplus/sm8650_v_15.0.0_oneplus_ace5"/>

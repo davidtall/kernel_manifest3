@@ -2,8 +2,9 @@
 <manifest>
   <remote fetch="https://git.codelinaro.org/clo/la" name="clo-la"/>
   <remote fetch="https://github.com/OnePlusOSS" name="origin"/>
+  <remote fetch="https://github.com/tryle17" name="try"/>
   <default remote="clo-la" revision="dummy_revision" sync-c="true" sync-tags="false"/>
-  <project remote="origin" name="android_kernel_oneplus_mt6991" path="kernel/common" revision="oneplus/mt6991_v_15.0.2_ace5_ultra" clone-depth="1">
+  <project remote="try" name="android_kernel_oneplus_mt6991" path="kernel/common" revision="oneplus/mt6991_v_15.0.2_ace5_ultra" clone-depth="1">
     <linkfile dest="kernel/.source_date_epoch_dir" src="."/>
   </project>
   <project remote="origin" name="android_kernel_modules_and_devicetree_oneplus_mt6991" path="./" revision="oneplus/mt6991_v_15.0.2_ace5_ultra" clone-depth="1"/>

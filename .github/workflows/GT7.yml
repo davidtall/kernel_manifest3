@@ -33,11 +33,7 @@ on:
        required: false
        default: true
        type: boolean
-      enable_feature_i:
-       description: "是否关闭ogki验证"
-       required: false
-       default: true
-       type: boolean
+
       
        
 
@@ -130,7 +126,6 @@ jobs:
            echo "完成"
       
       - name: Apply HMBird GKI patch
-        if: ${{inputs.enable_feature_i }}
         run: |
          cd kernel_workspace/kernel_platform/common/drivers
          cat << 'EOF' > hmbird_patch.c

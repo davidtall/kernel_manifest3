@@ -9,7 +9,7 @@ on:
       FEIL:
         description: "配置文件"
         required: true
-        default: 'gt7pro_speed'
+        default: 'gt7p_speed'
       CPUD:
         description: "处理器代号"
         required: true

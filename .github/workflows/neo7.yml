@@ -16,8 +16,8 @@ on:
         default: 'stable'
         type: choice
         options:
-          - stable
-          - dev
+          - 1.5.8
+          
       enable_feature_x:
        description: "是否启用kpm"
        required: false

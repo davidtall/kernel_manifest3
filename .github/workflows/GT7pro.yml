@@ -113,22 +113,7 @@ jobs:
           echo "正在打隐藏应用补丁"
           patch -p1 -F 3 < 69_hide_stuff.patch
 
-      - name: Apply Bore
-        run: | 
-         cd kernel_workspace/
-         git clone https://github.com/firelzrd/bore-scheduler.git
-         cd ./kernel_platform/common
-         cp ../../bore-scheduler/patches/stable/linux-6.6-bore/0001-linux6.6.87-bore5.9.6.patch ./
-         cp ../../bore-scheduler/patches/stable/linux-6.6-bore/0002-sched-fair-Prefer-full-idle-SMT-cores-by-Andrea-Righ.patch ./
-         patch -p1 -F 3 < 0001-linux6.6.87-bore5.9.6.patch || true
-         patch -p1 -F 3 < 0002-sched-fair-Prefer-full-idle-SMT-cores-by-Andrea-Righ.patch|| true
-         echo ＂正在添加bore补丁＂
-
-      - name: Upload AnyKernel3
-        uses: actions/upload-artifact@v4
-        with:
-         name: rej文件
-         path: ./kernel_workspace/kernel_platform/common/kernel/sched/*        
+          
       - name: Apply LZ4KD
         run: |
           cd kernel_workspace/kernel_platform/common
@@ -144,7 +129,6 @@ jobs:
       - name: Add SUSFS Configuration Settings
         run: |
           cd kernel_workspace/kernel_platform
-          echo "CONFIG_SCHED_BORE=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KPM=y" >> ./common/arch/arm64/configs/gki_defconfig
           # Add VFS configuration settings
@@ -238,4 +222,3 @@ jobs:
         with:
          name: SuKiSu_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}
          path: ./AnyKernel3/*
-         

@@ -116,10 +116,9 @@ jobs:
       - name: Apply Bore
         run: | 
          cd kernel_workspace/
-         git clone https://github.com/firelzrd/bore-scheduler.git
-         cp ../patches/stable/linux-6.6-bore/0001-linux6.6.87-bore5.9.6.patch ./common/
-         cp ../patches/stable/linux-6.6-bore/0002-sched-fair-Prefer-full-idle-SMT-cores-by-Andrea-Righ.patch ./common/
          cd ./kernel_platform/common
+         cp ../../bore-scheduler/patches/stable/linux-6.6-bore/0001-linux6.6.87-bore5.9.6.patch ./
+         cp ../../bore-scheduler/patches/stable/linux-6.6-bore/0002-sched-fair-Prefer-full-idle-SMT-cores-by-Andrea-Righ.patch ./
          patch -p1 -F 3 < 0001-linux6.6.87-bore5.9.6.patch
          patch -p1 -F 3 < 0002-sched-fair-Prefer-full-idle-SMT-cores-by-Andrea-Righ.patch
          echo ＂正在添加bore补丁＂

@@ -128,8 +128,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
          name: rej文件
-         path: ./kernel_workspace/kernel_platform/common/kernel/sched/fair.c.rej
-        
+         path: ./kernel_workspace/kernel_platform/common/kernel/sched/*        
       - name: Apply LZ4KD
         run: |
           cd kernel_workspace/kernel_platform/common

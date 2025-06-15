@@ -1,3 +1,3 @@
-# how to build
+# 目前学习编译内核中
 
-`chmod +x build.sh && ./build.sh`
+目前仓库任然会出现各种紊乱命名问题，请谨慎fork该仓库。

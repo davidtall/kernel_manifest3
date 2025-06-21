@@ -1,4 +1,4 @@
-name: ace5ultra and GT7
+name: GT7-Test
 on:
   workflow_dispatch:
     inputs:
@@ -96,13 +96,13 @@ jobs:
       - name: Set up SukiSU
         run: |
          cd kernel_workspace/kernel_platform
-          curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-${{ github.event.inputs.suki_branch }}
+         curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s fc0d9dae
          cd ./KernelSU
          KSU_VERSION=$(expr $(/usr/bin/git rev-list --count main) "+" 10606)
          echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
          export KSU_VERSION=$KSU_VERSION
          sed -i "s/DKSU_VERSION=12800/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
-      
+          
         
       - name: Set up susfs
         run: |

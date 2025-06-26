@@ -63,6 +63,9 @@ jobs:
           git config --global user.name "Futaba"
           git config --global user.email "3199167602@qq.com"
 
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
       - name: Install dependencies
         run: |
           sudo apt update && sudo apt upgrade -y
@@ -129,7 +132,7 @@ jobs:
       - name: Apply HMBird GKI patch
         run: |
           cd kernel_workspace/kernel_platform/common/drivers
-          cp $GITHUB_WORKSPACE/kernel_workspace/patches/hmbird_patch.c ./
+          cp $GITHUB_WORKSPACE/patches/hmbird_patch.c ./
           
           if ! grep -q "hmbird_patch.o" Makefile; then
           echo "obj-y += hmbird_patch.o" >> Makefile

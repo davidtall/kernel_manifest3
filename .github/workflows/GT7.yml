@@ -13,7 +13,7 @@ on:
       suki_branch:
         description: "选择SukiSU分支(Stable=稳定版, Dev=测试版)"
         required: true
-        default: 'susfs-1.5.7'
+        default: 'susfs-main'
       susfs_branch:
         description: "选择Susfs4ksu分支 "
         required: true
@@ -90,7 +90,7 @@ jobs:
       - name: Initialize repo and sync
         run: |
           mkdir kernel_workspace && cd kernel_workspace
-          repo init -u https://github.com/tryle17/kernel_manifest3.git -b realme/sm8750 -m 13t.xml --depth=1
+          repo init -u https://github.com/tryle17/kernel_manifest3.git -b realme/sm8750 -m MT6991.xml --depth=1
           repo --trace sync -c -j$(nproc --all) --no-tags
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"

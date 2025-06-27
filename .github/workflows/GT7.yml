@@ -13,7 +13,7 @@ on:
       suki_branch:
         description: "选择SukiSU分支(Stable=稳定版, Dev=测试版)"
         required: true
-        default: 'susfs-1.5.8'
+        default: 'susfs-1.5.7'
       susfs_branch:
         description: "选择Susfs4ksu分支 "
         required: true

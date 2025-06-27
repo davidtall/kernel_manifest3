@@ -13,7 +13,7 @@ on:
       suki_branch:
         description: "选择SukiSU分支(Stable=稳定版, Dev=测试版)"
         required: true
-        default: 'susfs-main'
+        default: 'susfs-1.5.8'
 
       enable_feature_x:
         description: "是否启用kpm"

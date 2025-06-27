@@ -14,6 +14,10 @@ on:
         description: "选择SukiSU分支(Stable=稳定版, Dev=测试版)"
         required: true
         default: 'susfs-1.5.8'
+      susfs_branch:
+        description: "选择Susfs4ksu分支 "
+        required: true
+        default: 'gki-android15-6.6'
 
       enable_feature_x:
         description: "是否启用kpm"
@@ -86,7 +90,7 @@ jobs:
       - name: Initialize repo and sync
         run: |
           mkdir kernel_workspace && cd kernel_workspace
-          repo init -u https://github.com/tryle17/kernel_manifest3.git -b realme/sm8750 -m MT6991.xml --depth=1
+          repo init -u https://github.com/tryle17/kernel_manifest3.git -b realme/sm8750 -m 13t.xml --depth=1
           repo --trace sync -c -j$(nproc --all) --no-tags
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
@@ -104,6 +108,7 @@ jobs:
         run: |
           cd kernel_workspace
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android15-6.6
+          pushd susfs4ksu && git checkout ${{ github.event.inputs.susfs_branch }} && popd
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           
           cd kernel_platform        

@@ -108,7 +108,10 @@ jobs:
         run: |
           cd kernel_workspace
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android15-6.6
-          pushd susfs4ksu && git checkout ${{ github.event.inputs.susfs_branch }} && popd
+          pushd susfs4ksu && git checkout ${{ github.event.inputs.susfs_branch }} 
+          SUSFS_VERSION=$(/usr/bin/git rev-parse HEAD | cut -c1-8)
+          echo "SUSFS_VERSION=$SUSFS_VERSION" >> $GITHUB_ENV
+          popd
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           
           cd kernel_platform        
@@ -248,5 +251,5 @@ jobs:
       - name: Upload AnyKernel3
         uses: actions/upload-artifact@v4
         with:
-          name: AnyKernel3_${{ env.KSUVER }}_realme_gt7_SuKiSu_Stable
+          name: AnyKernel3_${{ env.KSUVER }}_${{ env.SUSFS_VERSION }}@susfs4ksu_realme_gt7_SuKiSu_Stable
           path: ./AnyKernel3/*

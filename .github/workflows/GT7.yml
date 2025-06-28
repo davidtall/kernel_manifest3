@@ -95,9 +95,9 @@ jobs:
           ls -l ./
           echo "---------kernel_platform-------------"
           ls -l kernel_platform
-          echo "---------kernel-------------"
-          ls -l kernel
           cp -Rp kernel/* kernel_platform/
+          echo "---------kernel-------------"
+          ls -l kernel/tools
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 

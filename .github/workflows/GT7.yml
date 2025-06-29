@@ -92,12 +92,6 @@ jobs:
           mkdir kernel_workspace && cd kernel_workspace
           repo init -u https://github.com/davidtall/kernel_manifest3.git -b realme/sm8750 -m MT6991.xml --depth=1
           repo --trace sync -c -j$(nproc --all) --no-tags
-          ls -l ./
-          echo "---------kernel_platform-------------"
-          ls -l kernel_platform
-          cp -Rp kernel/* kernel_platform/
-          echo "---------kernel-------------"
-          ls -l kernel/tools
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 
